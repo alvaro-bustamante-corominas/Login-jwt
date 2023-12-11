@@ -3,7 +3,9 @@
 
 <div>
     <h2>
-        Bienvenido 
+        @if(user){
+            Bienvenido {{user.username}}
+        }
     </h2>
 
     <button (click)="LogOut()"> Log Out</button>
