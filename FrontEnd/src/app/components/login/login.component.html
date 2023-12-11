@@ -1,0 +1,65 @@
+@if (isLoginMode){
+<div >
+  <h2>Log in</h2>
+
+  <form [formGroup]="loginForm">
+    <p class="text-danger">{{loginError}}</p>
+    <div class="mb-3">
+      <label for="exampleInputUsername1" class="form-label">Username</label>
+      <input formControlName="username" type="username" class="form-control" id="exampleInputUsername1" aria-describedby="usernameHelp">  
+      @if(username.invalid && (username.dirty || username.touched)){
+        <div class="text-danger">
+            @if(username.errors?.['required']){
+            <div>
+                Username is required.
+            </div>
+          }
+            @if(username.errors?.['username']){
+            <div >
+                Invalid format.
+            </div>
+          }
+          
+        </div>
+      }
+    </div>
+    <div class="mb-3">
+      <label for="exampleInputPassword1" class="form-label">Password</label>
+      <input formControlName="password" type="password" class="form-control" id="exampleInputPassword1">
+      @if(password.invalid && (password.dirty || password.touched)){
+        <div class="text-danger">
+          @if(password.errors?.['required']){
+            <div>
+                Password is required.
+            </div>
+          }
+        </div> 
+      }
+    </div>
+    <button type="submit" (click)="login()" class="btn btn-primary">Log In</button>
+</form>
+  
+  <p> Don´t you have an account? <a (click)="toggleMode()" style="font-weight: bold;"> Sign up</a></p>
+</div>
+}
+
+@else {
+
+  <div>
+    <h2>Sign up</h2>
+    <form (ngSubmit)="onSubmit()">
+        <div>
+            <label for="newUsername">Username:</label>
+            <input type="username" id="newUsername" name="newUsername" [(ngModel)]="newUsername" required>
+        </div>
+        <div>
+            <label for="newPassword">Password:</label>
+            <input type="password" id="newPassword" name="newPassword" [(ngModel)]="newPassword" required>
+        </div>
+        <button type="submit">Sign up</button>
+    </form>
+    <p> Do you have an account? <a (click)="toggleMode()"style="font-weight: bold;"> Log in</a></p>
+</div>
+
+}
+
