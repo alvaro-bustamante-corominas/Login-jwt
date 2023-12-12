@@ -1,9 +1,11 @@
-FROM amazoncorretto:8u392-alpine3.17-jre
+FROM openjdk:22-oracle
 
-WORKDIR /app
+WORKDIR /opt
 
-COPY target/login-jwt-v1.jar app.jar
+ENV PORT 8080
 
 EXPOSE 8080
 
-ENTRYPOINT ["java", "-jar", "app.jar"]
+COPY target/*.jar /opt/app.jar
+
+ENTRYPOINT exec java $JAVA_OPTS -jar app.jar
