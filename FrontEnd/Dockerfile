@@ -1,6 +1,11 @@
-FROM node:20-alpine
-WORKDIR /app
+FROM node:20-alpine as angular
+WORKDIR /home/app
+COPY package*.json .
+RUN npm ci
 COPY . .
-RUN npm install
-EXPOSE 4200
-CMD ["npm", "start"]
+RUN npm run build
+
+FROM nginx:alpine
+WORKDIR /usr/share/nginx/html
+COPY --from=angular /home/app/dist/front-end/browser .
+EXPOSE 80

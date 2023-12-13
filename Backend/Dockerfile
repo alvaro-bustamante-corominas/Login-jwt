@@ -1,11 +1,7 @@
-FROM openjdk:22-oracle
-
-WORKDIR /opt
-
-ENV PORT 8080
-
+# Build stage
+#
+FROM maven:3.8.3-openjdk-17 AS build
+COPY target/login-jwt-v1.jar /home/app
 EXPOSE 8080
+ENTRYPOINT ["java", "-jar", "/home/app/login-jwt-v1.jar"]
 
-COPY target/*.jar /opt/app.jar
-
-ENTRYPOINT exec java $JAVA_OPTS -jar app.jar
