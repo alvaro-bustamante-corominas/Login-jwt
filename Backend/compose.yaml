@@ -1,6 +1,7 @@
 services:
   back:
-    build: .
+    #build: .
+    image: alvarobustamantecorominas/backend-login-jwt-v1:latest
     restart: always
     ports:
       - 9090:8080
