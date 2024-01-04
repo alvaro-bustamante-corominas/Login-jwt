@@ -4,7 +4,7 @@ services:
     image: alvarobustamantecorominas/backend-login-jwt-v1:latest
     restart: always
     ports:
-      - 9090:8080
+      - 8080:8080
     networks:
       - net1
     environment:
@@ -29,13 +29,25 @@ services:
       MYSQL_DATABASE: login-jwt
       MYSQL_ROOT_PASSWORD: root
 
-  #angular-app:
-    #image: alvarobustamantecorominas/frontend-login-jwt-v1:latest  # Replace with the actual repository and image name
-    #restart: always
-    #ports:
-     # - 4200:80  # Map Angular app's port 80 to the host machine
-    #networks:
-     # - net1
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8081:8080
+    environment:
+      ADMINER_DEFAULT_SERVER: bd-login
+    depends_on:
+      - bd-login
+    networks:
+      - net1
+
+  angular-app:
+    image: alvarobustamantecorominas/frontend-login-jwt-v1:latest  
+    restart: always
+    ports:
+      - 4200:80  # Map Angular app's port 80 to the host machine
+    networks:
+      - net1
 
 networks:
   net1:
