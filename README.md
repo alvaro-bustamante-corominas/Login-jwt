@@ -66,6 +66,30 @@ The project can be executed in two ways: locally, configuring a MySQL database, 
 
 8. Open your browser and access `http://localhost:4200` to use the application.
 
+### User Registration
+
+To register a new user, follow these steps using [Postman](https://www.postman.com/) or a similar tool:
+
+1. Create a POST request with the following URL: `http://localhost:8080/auth/register`
+
+2. In the request body, select the "raw" option and set the content type to "JSON".
+
+3. Enter the following JSON payload:
+
+    ```json
+    {
+        "username": "write_an_email",
+        "password": "write_a_password"
+    }
+    ```
+
+    Replace `"write_an_email"` with a valid email and `"write_a_password"` with a secure password.
+
+4. Send the request to create a new user.
+
+By following these steps, you'll successfully register a new user in the system. After registration, you can log in using the created credentials on the application's login page.
+
+
 ### Docker Compose
 
 #### Prerequisites
