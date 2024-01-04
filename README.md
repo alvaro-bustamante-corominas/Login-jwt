@@ -11,7 +11,7 @@ The backend is developed using **Spring Boot**, incorporating **JWT (JSON Web To
 - **Spring Boot 3**
 - **Spring Security 6**
 - **Java 17**
-- **MySQL** (as the database)
+- **MySQL**
 
 The frontend is built with **Angular**, incorporating **JWT** for secure authentication. The user interface is designed to seamlessly integrate with the Spring Boot backend.
 
@@ -37,28 +37,18 @@ The frontend is built with **Angular**, incorporating **JWT** for secure authent
     ```
 
 2. Once initialization is complete, the frontend will be accessible at `http://localhost:4200`.
+3. Adminer for MySQL Database:
 
-### User Registration
+   The MySQL database can be explored and managed using Adminer. Adminer is accessible at `http://localhost:8081`. You can use this interface to interact with the MySQL database.
 
-To register a new user, follow these steps using [Postman](https://www.postman.com/) or a similar tool:
+   - **Credentials:**
+       - **System:** MySQL
+       - **Server:** bd-login
+       - **Username:** root
+       - **Password:** root
+       - **Database:** login-jwt
 
-1. Create a POST request with the following URL: `http://localhost:8080/auth/register`
+Please note that the MySQL database is available on port `3307`, and Adminer is configured to connect to this database.
 
-2. In the request body, select the "raw" option and set the content type to "JSON".
-
-3. Enter the following JSON payload:
-
-    ```json
-    {
-        "username": "write_an_email",
-        "password": "write_a_password"
-    }
-    ```
-
-    Replace `"write_an_email"` with a valid email and `"write_a_password"` with a secure password.
-
-4. Send the request to create a new user.
-
-By following these steps, you'll successfully register a new user in the system. After registration, you can log in using the created credentials on the application's login page.
 
 
