@@ -47,17 +47,38 @@
 
   <div>
     <h2>Sign up</h2>
-    <form (ngSubmit)="onSubmit()">
-        <div>
-            <label for="newUsername">Username:</label>
-            <input type="username" id="newUsername" name="newUsername" [(ngModel)]="newUsername" required>
-        </div>
-        <div>
-            <label for="newPassword">Password:</label>
-            <input type="password" id="newPassword" name="newPassword" [(ngModel)]="newPassword" required>
-        </div>
-        <button type="submit">Sign up</button>
-    </form>
+    <form [formGroup]="signUpForm">
+      <p class="text-danger">{{signUpError}}</p>
+      <div class="mb-3">
+          <label for="exampleInputUsername1" class="form-label">Username</label>
+          <input formControlName="username" type="text" class="form-control" id="exampleInputUsername1" aria-describedby="usernameHelp">
+          @if(getUsername.invalid && (getUsername.dirty || getUsername.touched)){
+            <div class="text-danger">
+              @if(getUsername.errors?.['required']){
+                <div>
+                    Username is required.
+                </div>
+              }
+
+            </div> 
+          }
+      </div>
+      <div class="mb-3">
+          <label for="exampleInputPassword1" class="form-label">Password</label>
+          <input formControlName="password" type="password" class="form-control" id="exampleInputPassword1">
+          @if(getPassword.invalid && (getPassword.dirty || getPassword.touched)){
+        <div class="text-danger">
+          @if(getPassword.errors?.['required']){
+            <div>
+                Password is required.
+            </div>
+          }
+        </div> 
+      }
+      </div>
+      <button type="submit" (click)="signUp()" class="btn btn-primary">Sign Up</button>
+  </form>
+  
     <p> Do you have an account? <a (click)="toggleMode()"style="font-weight: bold;"> Log in</a></p>
 </div>
 

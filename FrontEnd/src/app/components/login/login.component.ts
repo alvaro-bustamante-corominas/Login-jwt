@@ -11,48 +11,61 @@ import { LoginRequest } from '../../services/auth/loginRequest';
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [FormsModule,ReactiveFormsModule, HttpClientModule,CommonModule],
+  imports: [FormsModule, ReactiveFormsModule, HttpClientModule, CommonModule],
   providers: [AuthService],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })
-export class LoginComponent implements OnInit{
+export class LoginComponent implements OnInit {
 
-  
-  isLoginMode=true;
-  showLoginForm=true;
-  loginError:string="";
-  loginForm=this.formBuilder.group({
-    username:['',[Validators.required,Validators.email]],
-    password: ['',Validators.required],
+  isLoginMode = true;
+  showLoginForm = true;
+  loginError: string = "";
+  loginForm = this.formBuilder.group({
+    username: ['', [Validators.required, Validators.email]],
+    password: ['', Validators.required],
   })
-newUsername: any;
-newPassword: any;
-  constructor(private formBuilder:FormBuilder, private router:Router, private authService: AuthService) { }
+
+  signUpError: string = "";
+  signUpForm = this.formBuilder.group({
+    username: ['', [Validators.required, Validators.email]],
+    password: ['', Validators.required],
+  })
+  newUsername: any;
+  newPassword: any;
+  constructor(private formBuilder: FormBuilder, private router: Router, private authService: AuthService) { }
 
   ngOnInit(): void {
   }
 
-  get username(){
+  get username() {
     return this.loginForm.controls.username;
   }
 
-  get password()
-  {
+  get password() {
     return this.loginForm.controls.password;
   }
-  
 
-  login(){
-    if(this.loginForm.valid){
-      this.loginError="";
+  
+  get getUsername() {
+    return this.signUpForm.controls.username;
+  }
+
+  get getPassword() {
+    return this.signUpForm.controls.password;
+  }
+
+  
+  login() {
+    if (this.loginForm.valid) {
+      this.loginError = "";
       this.authService.login(this.loginForm.value as LoginRequest).subscribe({
         next: (userData) => {
           //console.log(userData);
         },
         error: (errorData) => {
           console.error(errorData);
-          this.loginError=errorData;
+          this.loginError = errorData;
         },
         complete: () => {
           console.info("Login completo");
@@ -62,7 +75,32 @@ newPassword: any;
       })
 
     }
-    else{
+    else {
+      this.loginForm.markAllAsTouched();
+      alert("Error al ingresar los datos.");
+    }
+  }
+
+  signUp() {
+    if (this.signUpForm.valid) {
+      this.signUpError = "";
+      this.authService.signUp(this.signUpForm.value as LoginRequest).subscribe({
+        next: (userData) => {
+          //console.log(userData);
+        },
+        error: (errorData) => {
+          console.error(errorData);
+          this.signUpError = errorData;
+        },
+        complete: () => {
+          console.info("Sign Up completo");
+          this.toggleMode();
+          this.signUpForm.reset();
+        }
+      })
+
+    }
+    else {
       this.loginForm.markAllAsTouched();
       alert("Error al ingresar los datos.");
     }
@@ -71,14 +109,14 @@ newPassword: any;
 
   onSubmit() {
     if (this.isLoginMode) {
-        // Supongamos que el inicio de sesión es exitoso
+      // Supongamos que el inicio de sesión es exitoso
       // Redirige a la página de dashboard
       this.router.navigate(['/dashboard']);
 
       // Oculta el formulario después de la redirección
       this.showLoginForm = false;
     } else {
-     
+
     }
   }
 

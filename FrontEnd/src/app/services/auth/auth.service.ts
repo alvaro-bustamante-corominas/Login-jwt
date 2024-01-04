@@ -9,6 +9,7 @@ import { enviroment } from '../../../environments/environment';
   providedIn: 'root',
 })
 export class AuthService {
+ 
   
   currentUserLoginOn: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   currentUserData: BehaviorSubject<String> =new BehaviorSubject<String>("");
@@ -20,6 +21,19 @@ export class AuthService {
 
   login(credentials:LoginRequest):Observable<any>{
     return this.http.post<any>(enviroment.urlHost+"auth/login",credentials).pipe(
+      tap( (userData) => {
+        sessionStorage.setItem("token",userData.token);
+        this.currentUserData.next(userData.token);
+        this.currentUserLoginOn.next(true);
+              
+      }),
+      map((userData) => userData.token),
+      catchError(this.handleError)
+    );
+  }
+
+  signUp(credentials: LoginRequest):Observable<any> {
+    return this.http.post<any>(enviroment.urlHost+"auth/register",credentials).pipe(
       tap( (userData) => {
         sessionStorage.setItem("token",userData.token);
         this.currentUserData.next(userData.token);
