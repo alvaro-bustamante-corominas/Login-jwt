@@ -1,6 +1,5 @@
 services:
   back:
-    #build: .
     image: alvarobustamantecorominas/backend-login-jwt-v1:latest
     restart: always
     ports:
@@ -28,6 +27,8 @@ services:
     environment:
       MYSQL_DATABASE: login-jwt
       MYSQL_ROOT_PASSWORD: root
+    volumes:
+      - mysql-data:/var/lib/mysql  # Volume for persistent storage
 
   adminer:
     image: adminer
@@ -45,9 +46,12 @@ services:
     image: alvarobustamantecorominas/frontend-login-jwt-v1:latest  
     restart: always
     ports:
-      - 4200:80  # Map Angular app's port 80 to the host machine
+      - 4200:80  
     networks:
       - net1
 
 networks:
   net1:
+
+volumes:
+  mysql-data:  
